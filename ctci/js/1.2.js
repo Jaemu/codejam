@@ -11,7 +11,7 @@
 //
 //Moving on...
 //Method 1:
-function reverseString(testStr){
+function reverseString1(testStr){
 	var index = testStr.length;
 	var result = [];
 	for(index; index>-1; index--){
@@ -22,3 +22,10 @@ function reverseString(testStr){
 
 console.assert(reverseString('hello').length === 6);
 console.assert(reverseString('hello').join('') === 'olleh');
+
+//Method 2:
+function reverseString2(testStr){
+	return testStr.split('')
+	.reverse()
+	.join();
+}
