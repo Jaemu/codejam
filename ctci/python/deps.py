@@ -9,6 +9,8 @@ def getBuildList(graph, nodes):
 			buildList = buildList + graph.keys()
 			break;
 		nextToBuild = [x for x in graph.keys() if not x in seenNodes]
+		if(len(nextToBuild) == 0):
+			return 'No valid build - cycle detected'
 		for node in nextToBuild:
 			graph.pop(node)
 		buildList = buildList + nextToBuild
