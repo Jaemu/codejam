@@ -12,29 +12,25 @@ class Box:
 		return str('Box: height - ' + str(self.height) + ', width - ' + str(self.width) + ', depth - ' + str(self.depth))
 
 	def __lt__(self, other):
-		return self.height < other.height and self.width < other.width and self.depth < other.depth
-
-cache = {}
+		return self.height <= other.height and self.width < other.width and self.depth < other.depth
 
 def getMaxTowers(boxes, bottom):
-	global cache
 	if bottom is None:
 		return []
 	if boxes is None or len(boxes) == 0:
 		return [bottom]
-	if len(boxes) == 1:
-		if(boxes[0] < bottom):
-			return [bottom, boxes[0]]
-		else:
-			return [bottom]
+	#if bottom in cache.keys():
+	#	return cache[bottom]
 	maxTower = [bottom]
 	maxHeight = 0
 	for i in xrange(len(boxes)):
+		tower = [bottom] 
 		if boxes[i] < bottom:
-			tower = [bottom] + getMaxTowers(boxes[i:], boxes[i])
+			tower = tower + getMaxTowers(boxes[i:], boxes[i])
 			currentHeight = 0
 			for b in tower:
 				currentHeight = currentHeight + b.height
+			print('Current: ' + str(currentHeight) + ', max: ' + str(maxHeight))
 			if currentHeight > maxHeight:
 				maxHeight = currentHeight
 				maxTower = tower
@@ -43,20 +39,26 @@ def getMaxTowers(boxes, bottom):
 
 
 def getMaxTower(boxes):
-	towers = {}
+	towers = []
+	maxHeight = 0
+	maxTower = 0
 	if len(boxes) <= 1:
 		return [boxes]
-	maxTower = []
 	for box in boxes:
-		towers[box] = getMaxTowers(boxes, box)
-		if len(towers[box]) > len(maxTower):
-			maxTower = towers[box]
-	print(towers)
-	return maxTower
+		towers.append(getMaxTowers(boxes, box))
+	for tower in towers:
+		currentHeight = 0
+		for box in tower:
+			currentHeight = currentHeight + box.height
+		if(currentHeight > maxHeight):
+			maxHeight = currentHeight
+			maxTower = towers.index(tower)
+	return towers[maxTower]
 
 def main():
+	global cache
 	boxes = []
-	for i in xrange(10):
+	for i in xrange(5):
 		width = random.randint(1,50)
 		height = random.randint(width,50)
 		depth = random.randint(1,30)
@@ -66,7 +68,7 @@ def main():
 	print('Boxes: ')
 	for i in boxes:
 		print(i)
-	print("Max tower")
+	print('Max Tower: ')
 	for i in result:
 		print(i)
 
