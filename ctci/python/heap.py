@@ -11,8 +11,6 @@ class Heap:
 		indexOfParent = ((currentIndex)/2)
 		self.heapify()
 
-
-
 	def heapify(self):
 		currentIndex = len(self.items) - 1
 		parentIndex = (currentIndex/2)
@@ -44,15 +42,13 @@ class Heap:
 
 
 def main():
-	heap = Heap(False)
-	heap.insert(3)
-	heap.insert(5)
-	heap.insert(10)
-	heap.insert(6)
-	heap.insert(20)
-	print('Current max: ' + str(heap.getRoot()))
-	print('Current max: ' + str(heap.getRoot()))
-	print(heap.items)
+	maxHeap = Heap(False)
+	maxHeap.insert(3)
+	maxHeap.insert(5)
+	maxHeap.insert(10)
+	maxHeap.insert(6)
+	maxHeap.insert(20)
+	print(maxHeap.items)
 
 
 if __name__ == '__main__':
