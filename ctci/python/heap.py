@@ -17,8 +17,6 @@ class Heap:
 		currentIndex = len(self.items) - 1
 		parentIndex = (currentIndex/2)
 		while(currentIndex > -1 and parentIndex > -1):
-			if(currentIndex == parentIndex):
-				return
 			if(self.isMin):
 				if(self.items[currentIndex] < self.items[parentIndex]):
 					self.items[currentIndex] = self.items[currentIndex] + self.items[parentIndex]
@@ -31,7 +29,18 @@ class Heap:
 					self.items[currentIndex] =  self.items[currentIndex]  - self.items[parentIndex]
 			currentIndex = currentIndex - 1
 			parentIndex = (currentIndex/2)
+		print(self.items)
 
+	def getRoot(self):
+		if(len(self.items) == 0):
+			print('Heap is empty')
+			return
+		root = self.items[0]
+		self.items[0] = self.items[len(self.items) - 1]
+		remove = self.items.pop()
+		print(self.items)
+		self.heapify()
+		return root
 
 
 def main():
@@ -41,6 +50,8 @@ def main():
 	heap.insert(10)
 	heap.insert(6)
 	heap.insert(20)
+	print('Current max: ' + str(heap.getRoot()))
+	print('Current max: ' + str(heap.getRoot()))
 	print(heap.items)
 
 
